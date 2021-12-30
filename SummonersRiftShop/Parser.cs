@@ -109,7 +109,6 @@ namespace SummonersRiftShop
 
             itemParameters[4] = document.QuerySelector(@"td[data-source='buy']").TextContent.TrimStart(' ');
 
-
             try
             {
                 itemParameters[5] = document.QuerySelector($"aside[role='region']").
