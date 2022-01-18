@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SummonersRiftShop.Models
 {
-    public class ShopContext : DbContext
+    public class RiftShopContext : DbContext
     {
         public DbSet<Item> Items { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        public ShopContext(DbContextOptions<ShopContext> options)
+        public RiftShopContext(DbContextOptions<RiftShopContext> options)
             : base(options)
         {
             Database.EnsureCreated();

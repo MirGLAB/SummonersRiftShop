@@ -11,16 +11,32 @@ namespace SummonersRiftShop.Controllers
 {
     public class HomeController : Controller
     {
-        ShopContext db;
+        RiftShopContext db;
 
-        public HomeController(ShopContext context)
+        public HomeController(RiftShopContext context)
         {
             db = context;
         }
 
         public IActionResult Index()
         {
+            return View(db.Items.ToList());
+        }
+
+        [HttpGet]
+        public IActionResult Buy(int? id)
+        {
+            if (id == null) return RedirectToAction("Index");
+            ViewBag.ItemId = id;
             return View();
+        }
+
+        [HttpPost]
+        public string Buy(Order order)
+        {
+            db.Orders.Add(order);
+            db.SaveChanges();
+            return $"Thank you {order.User} for the purchase!";
         }
     }
 }

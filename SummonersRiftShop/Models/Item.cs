@@ -13,5 +13,18 @@ namespace SummonersRiftShop.Models
         public string Effects { get; set; }
         public int Price { get; set; }
         public string Icon { get; set; }
+
+        /*
+        // Конструктор в модели?
+        public Item(string[] parameters)
+        {
+            Id = int.Parse(parameters[0]);
+            Name = parameters[1];
+            Quality = parameters[2];
+            Effects = parameters[3];
+            Price = int.Parse(parameters[4]);
+            Icon = parameters[5];
+        }
+        */
     }
 }

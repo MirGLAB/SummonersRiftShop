@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Registration</title>
+</head>
+<body>
+    <div>
+        <h3>Order Form</h3>
+        <p>To complete your purchase, please fill in the following fields:</p>
+        <form method="post">
+            <input type="hidden" value="@ViewBag.ItemId" name="ItemId" />
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="User" /> </td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><input type="text" name="Address" /></td>
+                </tr>
+                <tr><td><input type="submit" value="Buy" /> </td><td></td></tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

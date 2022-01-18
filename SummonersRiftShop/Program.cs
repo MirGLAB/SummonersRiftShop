@@ -22,7 +22,7 @@ namespace SummonersRiftShop
 
                 try
                 {
-                    var context = services.GetRequiredService<ShopContext>();
+                    var context = services.GetRequiredService<RiftShopContext>();
                     Data.Initialize(context);
                 }
                 catch (Exception ex)

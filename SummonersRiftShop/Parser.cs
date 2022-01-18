@@ -13,40 +13,6 @@ namespace SummonersRiftShop
 {
     public class Parser
     {
-        /*
-        public static async Task<List<string[]>> GetItemsUrls()
-        {
-            List<string[]> items = new List<string[]>();
-            string[] qualityTiers = new string[]
-                { "Starter Items", "Basic Items", "Epic Items", "Legendary Items", "Mythic Items" };
-            var url = "https://leagueoflegends.fandom.com/wiki/Item_(League_of_Legends)";
-            var hrefUrl = "https://leagueoflegends.fandom.com";
-
-            using var parsingContext = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
-            using var document = await parsingContext.OpenAsync(url);
-
-            var itemArrays = document.QuerySelectorAll(@".tlist").
-                Take(9).Where(ils => ils.Index() == 1 || ils.Index() >= 15);
-            var qualityTier = 0;
-
-            foreach (var itemArray in itemArrays)
-            {
-                var itemIcons = itemArray.QuerySelectorAll("a").OfType<IHtmlAnchorElement>();
-
-                foreach (var itemIcon in itemIcons)
-                {
-                    var itemHref = $"{hrefUrl}{itemIcon.GetAttribute("href")}";
-                    items.Add(new string[] { qualityTiers[qualityTier], itemHref });
-                }
-                qualityTier++;
-            }
-
-            Debug.WriteLine("Items array parsing done!");
-
-            return items;
-        }
-        */
-
         public static async Task<List<string>> GetItemsUrls()
         {
             List<string> items = new List<string>();
@@ -89,7 +55,8 @@ namespace SummonersRiftShop
             itemParameters[1] = Regex.Match(document.Title, @"[^\|]+").ToString();
             itemParameters[1] = itemParameters[1].Substring(0, itemParameters[1].Length - 1);
 
-            itemParameters[2] = "Quality!";
+            itemParameters[2] = document.QuerySelector("div.page-header__categories").
+                QuerySelector("a").TextContent;
 
             var parsingParameters = document.QuerySelector("aside.portable-infobox").
                 QuerySelectorAll("section.pi-item").
@@ -105,9 +72,9 @@ namespace SummonersRiftShop
                 foreach(var parameter in parameters)
                     itemParameters[3] += $"{parameter.TextContent}\n";
             }
-            itemParameters[3] = itemParameters[3].TrimEnd('\n');
+            itemParameters[3] = itemParameters[3].Trim('\n', ' ');
 
-            itemParameters[4] = document.QuerySelector(@"td[data-source='buy']").TextContent.TrimStart(' ');
+            itemParameters[4] = document.QuerySelector(@"td[data-source='buy']").TextContent.Trim('\n', ' ');
 
             try
             {
@@ -115,11 +82,14 @@ namespace SummonersRiftShop
                     QuerySelector($"img[alt=\"{itemParameters[1]}\"]").
                     GetAttribute("src");
 
+                /*
+                // Загрузка иконок
                 using (WebClient client = new WebClient())
                 {
                     client.DownloadFileAsync(new Url(itemParameters[5]),
                         @$"C:\\Users\mirgl\source\repos\SummonersRiftShop\SummonersRiftShop\Images\{itemParameters[1]}.png");
                 } 
+                */
             }
             catch
             {

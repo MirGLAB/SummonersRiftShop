@@ -9,9 +9,9 @@ namespace SummonersRiftShop.Models
     {
         public int OrderId { get; set; }
         public string User { get; set; } 
+        public string Address { get; set; }
 
         public int ItemId { get; set; }
-        public int ItemAmount { get; set; }
         public Item Item { get; set; }
     }
 }
