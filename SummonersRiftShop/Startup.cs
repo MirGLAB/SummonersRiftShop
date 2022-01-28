@@ -26,22 +26,29 @@ namespace SummonersRiftShop
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<RiftShopContext>(options => options.UseSqlServer(connection));
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
+            // Отключение испольщование маррутизации по конечным точкам
+            services.AddControllersWithViews(mvcOtions =>
+            {
+                mvcOtions.EnableEndpointRouting = false;
+            });
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseStaticFiles();
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
+            // добавление компонентов mvc и определение маршрута
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
+                routes.MapRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

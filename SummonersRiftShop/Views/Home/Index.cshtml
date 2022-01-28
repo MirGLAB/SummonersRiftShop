@@ -1,35 +1,24 @@
 ﻿@model IEnumerable<SummonersRiftShop.Models.Item>
 @{
-    //ViewData["Title"] = "Item list";
-    Layout = null;
+    ViewData["Title"] = "Item list";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Summoner's Rift Shop</title>
-</head>
-<body>
-    <h3>Items</h3>
-    <table>
+<h3>Items</h3>
+<table class="table-codensed">
+    <tr>
+        <td>Name</td>
+        <td>Quality</td>
+        <td>Effects</td>
+        <td>Price</td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
         <tr>
-            <td>Name</td>
-            <td>Quality</td>
-            <td>Effects</td>
-            <td>Price</td>
-            <td></td>
+            <td>@item.Name</td>
+            <td>@item.Quality</td>
+            <td>@item.Effects</td>
+            <td>@item.Price</td>
+            <td><a href="~/Home/Buy/@item.Id">Buy</a></td>
         </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Quality</td>
-                <td>@item.Effects</td>
-                <td>@item.Price</td>
-                <td><a href="~/Home/Buy/@item.Id">Buy</a></td>
-            </tr>
-        }
-    </table>
-</body>
-</html>
+    }
+</table>

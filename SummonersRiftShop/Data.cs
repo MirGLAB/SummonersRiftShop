@@ -24,14 +24,8 @@ namespace SummonersRiftShop
 
                 itemsUrls.Remove("https://leagueoflegends.fandom.com/wiki/Broken_Stopwatch");
 
-                //Debug.WriteLine(itemsUrls.Count);
-
                 foreach (var itemUrl in itemsUrls)
-                {
-                    //var itemParameters = Parser.GetItem(itemUrl);
                     itemsParameters.Add(Parser.GetItem(itemUrl).Result);
-                    //break;
-                }
 
                 Debug.WriteLine("Downloading done!");
 
@@ -49,19 +43,6 @@ namespace SummonersRiftShop
                         }
                     );
                 }
-
-                /*
-                foreach (var item in items)
-                {
-                    Debug.WriteLine($"Item: {item.Name}");
-                    Debug.WriteLine($"ID: {item.Id}");
-                    Debug.WriteLine($"Quaity: {item.Quality}");
-                    Debug.WriteLine($"Effects: {item.Effects}");
-                    Debug.WriteLine($"Price: {item.Price}");
-                    Debug.WriteLine($"Icon: {item.Icon}");
-                    Debug.Write("\n");
-                }
-                */
 
                 using (var transaction = context.Database.BeginTransaction())
                 {

@@ -82,18 +82,15 @@ namespace SummonersRiftShop
                     QuerySelector($"img[alt=\"{itemParameters[1]}\"]").
                     GetAttribute("src");
 
-                /*
                 // Загрузка иконок
                 using (WebClient client = new WebClient())
                 {
                     client.DownloadFileAsync(new Url(itemParameters[5]),
                         @$"C:\\Users\mirgl\source\repos\SummonersRiftShop\SummonersRiftShop\Images\{itemParameters[1]}.png");
                 } 
-                */
             }
             catch
             {
-                //Debug.WriteLine(itemParameters[1]);
             }
 
             return itemParameters;

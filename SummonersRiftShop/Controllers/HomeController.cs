@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SummonersRiftShop.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace SummonersRiftShop.Controllers
+namespace SummonersRiftShop.Shop.Controllers
 {
     public class HomeController : Controller
     {
@@ -28,6 +23,11 @@ namespace SummonersRiftShop.Controllers
         {
             if (id == null) return RedirectToAction("Index");
             ViewBag.ItemId = id;
+
+            // Запрос к бд итем по ид
+            // ViewBag.Item = new Item(...);
+            // или return View(item);
+
             return View();
         }
 
