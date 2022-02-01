@@ -6,6 +6,8 @@ using SummonersRiftShop.Models;
 using System.Diagnostics;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
+using AngleSharp;
+using System.IO;
 
 namespace SummonersRiftShop
 {
@@ -44,6 +46,20 @@ namespace SummonersRiftShop
                     );
                 }
 
+                List<Category> categories = new List<Category>();
+                List<string> categoryNames = items.Select(item => item.Quality).Distinct().ToList();
+                foreach (var categoryName in categoryNames)
+                {
+                    categories.Add(
+                        new Category
+                        {
+                            Name = categoryName
+                        }
+                    );
+                }
+                context.Categories.AddRange(categories);
+                context.SaveChanges();
+
                 using (var transaction = context.Database.BeginTransaction())
                 {
                     context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Items ON;");
@@ -53,7 +69,21 @@ namespace SummonersRiftShop
                     transaction.Commit();
                 }
 
-                Debug.WriteLine("DB creating done!");
+                Debug.WriteLine("Table creating done!");
+
+                //Замена ссылок на картинки в инете на их локальные адресса в таблице
+                //UpdateItemIcons(context, items);
+            }
+        }
+
+        private static void UpdateItemIcons(RiftShopContext context, List<Item> items)
+        {
+            foreach (var item in items)
+            {
+                context.Items.Attach(item);
+                context.Entry(item).Property(i => i.Icon).IsModified = true;
+                context.SaveChanges();
+                Debug.WriteLine($"{item.Name} updated");
             }
         }
     }

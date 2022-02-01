@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SummonersRiftShop.Models;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SummonersRiftShop.Shop.Controllers
 {
@@ -15,20 +19,24 @@ namespace SummonersRiftShop.Shop.Controllers
 
         public IActionResult Index()
         {
-            return View(db.Items.ToList());
+            ViewBag.Items = db.Items.ToList();
+            ViewBag.Categories = db.Categories.ToList();
+            return View();
+            //return View(db.Items.ToList());
         }
 
         [HttpGet]
-        public IActionResult Buy(int? id)
+        public async Task<IActionResult> Buy(int? id)
         {
             if (id == null) return RedirectToAction("Index");
-            ViewBag.ItemId = id;
 
-            // Запрос к бд итем по ид
-            // ViewBag.Item = new Item(...);
-            // или return View(item);
-
-            return View();
+            if (id != null)
+            {
+                Item item = await db.Items.FirstOrDefaultAsync(i => i.Id == id);
+                if (item != null)
+                    return View(item);
+            }
+            return NotFound();
         }
 
         [HttpPost]

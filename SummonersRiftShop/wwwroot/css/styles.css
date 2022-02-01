@@ -1,0 +1,58 @@
+﻿html {
+    overflow-y: scroll;
+}
+
+body {
+    background: url(/Images/Website/RiftShop.jpg) no-repeat center center fixed;
+    background-size: cover;
+    font-family: rubik, helvetica, arial, sans-serif;
+    font-size: 14px;
+    color: lightgray;
+}
+
+h1.shopName {
+    text-align: center;
+}
+
+/*
+details#categories {
+    display: inline-block;
+}
+*/
+
+table, th, td {
+    padding: 8px;
+    border: 2px solid #785a28;
+}
+
+th, td {
+    text-align: center;
+}
+
+th {
+    background-color: #785a28;
+}
+
+img.itemIcon {
+    border: 2px solid lightgray;
+}
+
+a.itemPrice {
+    color: gold;
+    white-space: nowrap;
+}
+
+table.effects, tr.effects, td.effects {
+    width: 100%;
+    padding: 0px;
+    padding-bottom: 4px;
+    text-align: left;
+    border-bottom: 2px solid #785a28;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}
+
+table.effects:last-child, tr.effects:last-child, td.effects:last-child {
+    border-bottom: none;
+}

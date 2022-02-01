@@ -8,6 +8,7 @@ using System.Diagnostics;
 using AngleSharp.Html.Dom;
 using System.Text.RegularExpressions;
 using System.Net;
+using System.IO;
 
 namespace SummonersRiftShop
 {
@@ -78,16 +79,22 @@ namespace SummonersRiftShop
 
             try
             {
-                itemParameters[5] = document.QuerySelector($"aside[role='region']").
+                var iconWebAddress = document.QuerySelector($"aside[role='region']").
                     QuerySelector($"img[alt=\"{itemParameters[1]}\"]").
                     GetAttribute("src");
 
-                // Загрузка иконок
-                using (WebClient client = new WebClient())
+                string iconName = itemParameters[1].Replace(" ", "_");
+                string iconPath = 
+                    @$"C:\\Users\mirgl\source\repos\SummonersRiftShop\SummonersRiftShop\wwwroot\Images\{iconName}.png";
+                if (!File.Exists(iconPath))
                 {
-                    client.DownloadFileAsync(new Url(itemParameters[5]),
-                        @$"C:\\Users\mirgl\source\repos\SummonersRiftShop\SummonersRiftShop\Images\{itemParameters[1]}.png");
-                } 
+                    // Загрузка иконок
+                    using (WebClient client = new WebClient())
+                    {
+                        client.DownloadFile(new Url(iconWebAddress), iconPath);
+                    }
+                }
+                itemParameters[5] = iconPath;
             }
             catch
             {

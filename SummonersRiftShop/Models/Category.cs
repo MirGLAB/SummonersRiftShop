@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SummonersRiftShop.Models
 {
-    public class Order
+    public class Category
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
-        public string User { get; set; } 
-        public string Address { get; set; }
-
-        public int ItemId { get; set; }
-        public Item Item { get; set; }
+        public string Name { get; set; }
     }
 }

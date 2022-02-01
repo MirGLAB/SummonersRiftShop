@@ -1,7 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Order Registration";   
+﻿@model SummonersRiftShop.Models.Item;
+@{
+    ViewData["Title"] = "Order Registration";
 }
-<h2>Item</h2>
+<h3>Item</h3>
 <table class="table-codensed">
     <tr>
         <td>Name</td>
@@ -11,13 +12,13 @@
         <td></td>
     </tr>
     <tr>
-        <td>@ViewBag.Name</td>
-        <td>@ViewBag.Quality</td>
-        <td>@ViewBag.Effects</td>
-        <td>@ViewBag.Price</td>
+        <td>@Model.Name</td>
+        <td>@Model.Quality</td>
+        <td>@Model.Effects</td>
+        <td>@Model.Price</td>
     </tr>
 </table>
-<h2>Order Form</h2>
+<h3>Order Form</h3>
 <form method="post" class="form-horizontal" role="form">
     <input type="hidden" value="@ViewBag.ItemId" name="ItemId" />
     <p>To complete your purchase, please fill in the following fields:</p>

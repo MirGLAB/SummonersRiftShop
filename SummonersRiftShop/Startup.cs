@@ -24,10 +24,12 @@ namespace SummonersRiftShop
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // получаем строку подключения из файла конфигурации
             string connection = Configuration.GetConnectionString("DefaultConnection");
+            // добавляем контекст MobileContext в качестве сервиса в приложение
             services.AddDbContext<RiftShopContext>(options => options.UseSqlServer(connection));
             //services.AddControllersWithViews();
-            // Отключение испольщование маррутизации по конечным точкам
+            // Отключение использование маррутизации по конечным точкам
             services.AddControllersWithViews(mvcOtions =>
             {
                 mvcOtions.EnableEndpointRouting = false;
