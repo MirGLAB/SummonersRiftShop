@@ -115,9 +115,7 @@
                     <br />
                     <details style="text-align: left">
                         <summary>Recipe</summary>
-                        <a asp-action="GetRecipe"
-                           asp-route-item="@item.Id">
-                        </a>
+                        @ShopHtmlHelper.GetRecipe(item)
                     </details>
                 </td>
                 <td>

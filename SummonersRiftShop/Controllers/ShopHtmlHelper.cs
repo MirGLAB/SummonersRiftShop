@@ -24,6 +24,11 @@ namespace SummonersRiftShop.Views.Home
             return new HtmlString(result);
         }
 
+        public static HtmlString GetRecipe(Item item)
+        {
+            return new HtmlString($"{item.Name}");
+        }
+
         public static HtmlString GetItems(string categoryName)
         {
             return new HtmlString($"<p>{categoryName}</p>");

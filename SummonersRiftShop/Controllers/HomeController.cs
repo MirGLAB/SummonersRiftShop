@@ -20,11 +20,6 @@ namespace SummonersRiftShop.Shop.Controllers
             db = context;
         }
 
-        public IActionResult GetRecipe(string itemName)
-        {
-            return Content($"{itemName}");
-        }
-
         public async Task<IActionResult> Index(string category = "All items", string name = "",
             int page = 1,
             SortState sortOrder = SortState.IdAsc)
