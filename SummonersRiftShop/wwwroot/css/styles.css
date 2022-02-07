@@ -1,11 +1,29 @@
-﻿html {
+﻿@font-face {
+    font-family: LoLFont;
+    src: url("fonts/lolfonts/Friz Quadrata Regular.ttf");
+    font-style: normal;
+}
+
+@font-face {
+    font-family: LoLFont;
+    src: url("fonts/lolfonts/Friz Quadrata Bold.otf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: LoLFont;
+    src: url("fonts/lolfonts/Friz Quadrata Italic.ttf");
+    font-style: italic;
+}
+
+html {
     overflow-y: scroll;
 }
 
 body {
     background: url(/Images/Website/RiftShop.jpg) no-repeat center center fixed;
     background-size: cover;
-    font-family: rubik, helvetica, arial, sans-serif;
+    font-family: LoLFont;
     font-size: 14px;
     color: lightgray;
 }
@@ -19,6 +37,10 @@ details#categories {
     display: inline-block;
 }
 */
+
+tabel {
+    width: 1000px;
+}
 
 table, th, td {
     padding: 8px;
@@ -41,6 +63,13 @@ a.itemPrice {
     color: gold;
     white-space: nowrap;
 }
+
+/* Стилизация тег-хелпера не работает
+a.itemOrder, a.itemOrder:link, a.itemOrder:visited, 
+a.itemOrder:focus, a.itemOrder:hover, a.itemOrder:active {
+    color: lightgray;
+}
+*/
 
 table.effects, tr.effects, td.effects {
     width: 100%;

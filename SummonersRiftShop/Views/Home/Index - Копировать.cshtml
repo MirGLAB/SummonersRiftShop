@@ -1,0 +1,123 @@
+﻿@using SummonersRiftShop.Views.Home
+@{
+    ViewData["Title"] = "Item list";
+}
+@model IEnumerable<Item>
+<body>
+    <h3>Items</h3>
+
+    <form method="get">
+        <input type="submit" name="categoryName" value="All items" />
+        @foreach (var category in ViewBag.Categories)
+        {
+            <input type="submit" name="categoryName" value="@category.Name"/>  
+        }
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Icon<br />
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort" style="color:lightgray">
+                        (Default order)
+                    </a>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort" style="color:lightgray">
+                        Name
+                    </a>
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Effects
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.PriceSort" style="color:lightgray">
+                        Price
+                    </a>
+                </th>
+            </tr>
+        <thead>
+        <tbody>
+            @foreach (var item in ViewBag.Items)
+            {
+                <tr>
+                    <td>
+                        <img class="itemIcon" src="@ShopHtmlHelper.GetURL(item.Name)" alt="@item.Name" />
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Quality</td>
+                    <td>@ShopHtmlHelper.GetEffects(item.Effects)</td>
+                    <td>
+                        <a class="itemPrice" href="~/Home/Buy/@item.Id">
+                            @item.Price
+                            <img src="~/Images/Website/Gold.png" alt="Gold">
+                        </a>
+                    </td>
+                </tr>
+            }
+        <tbody>
+    </table>
+
+
+
+
+    @foreach (var category in ViewBag.Categories)
+    {
+        <details class="categories">
+            <summary>@category.Name</summary>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Icon<br />
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort" style="color:lightgray">
+                                (Default order)
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort" style="color:lightgray">
+                                Name
+                            </a>
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Effects
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.PriceSort" style="color:lightgray">
+                                Price
+                            </a>
+                        </th>
+                    </tr>
+                <thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Items)
+                    {
+                        if (item.Quality == category.Name)
+                        {
+                            <tr>
+                                <td>
+                                    <img class="itemIcon" src="@ShopHtmlHelper.GetURL(item.Name)" alt="@item.Name" />
+                                </td>
+                                <td>@item.Name</td>
+                                <td>@item.Quality</td>
+                                <td>@ShopHtmlHelper.GetEffects(item.Effects)</td>
+                                <td>
+                                    <a class="itemPrice" href="~/Home/Buy/@item.Id">
+                                        @item.Price
+                                        <img src="~/Images/Website/Gold.png" alt="Gold">
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                <tbody>
+            </table>
+        </details>
+    }
+</body>

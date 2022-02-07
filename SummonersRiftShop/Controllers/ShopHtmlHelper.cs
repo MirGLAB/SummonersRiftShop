@@ -23,5 +23,10 @@ namespace SummonersRiftShop.Views.Home
             result = $"{result}{itemEffects}</td></tr></table>";
             return new HtmlString(result);
         }
+
+        public static HtmlString GetItems(string categoryName)
+        {
+            return new HtmlString($"<p>{categoryName}</p>");
+        }
     }
 }

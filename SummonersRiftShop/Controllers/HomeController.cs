@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SummonersRiftShop.Shop.Controllers
 {
@@ -17,13 +19,68 @@ namespace SummonersRiftShop.Shop.Controllers
             db = context;
         }
 
-        public IActionResult Index()
+        public IActionResult GetRecipe(string itemName)
         {
-            ViewBag.Items = db.Items.ToList();
-            ViewBag.Categories = db.Categories.ToList();
-            return View();
-            //return View(db.Items.ToList());
+            return Content($"{itemName}");
         }
+
+        public async Task<IActionResult> Index(string category = "All items", int page = 1,
+            SortState sortOrder = SortState.IdAsc)
+        {
+            ViewBag.Categories = db.Categories.ToList();
+
+            int pageSize = 5;
+
+            //фильтрация
+            IQueryable<Item> items = db.Items;
+
+            if (category != "All items")
+            {
+                items = items.Where(i => i.Quality == category);
+            }
+
+            // сортировка
+            switch (sortOrder)
+            {
+                case SortState.IdDesc:
+                    items = items.OrderByDescending(i => i.Id);
+                    break;
+                case SortState.NameAsc:
+                    items = items.OrderBy(i => i.Name);
+                    break;
+                case SortState.NameDesc:
+                    items = items.OrderByDescending(i => i.Name);
+                    break;
+                case SortState.PriceAsc:
+                    items = items.OrderBy(i => i.Price);
+                    break;
+                case SortState.PriceDesc:
+                    items = items.OrderByDescending(i => i.Price);
+                    break;
+                default:
+                    items = items.OrderBy(i => i.Id);
+                    break;
+            }
+
+            // пагинация
+            var count = await items.CountAsync();
+            var itemsPortion = await items.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            // формируем модель представления
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+                FilterViewModel = new FilterViewModel(category),
+                Items = itemsPortion
+            };
+
+            ViewBag.Categories = db.Categories.ToList();
+            return View(viewModel);
+        }
+
+
+
 
         [HttpGet]
         public async Task<IActionResult> Buy(int? id)
