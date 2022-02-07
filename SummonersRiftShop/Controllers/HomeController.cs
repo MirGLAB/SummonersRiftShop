@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
 
 namespace SummonersRiftShop.Shop.Controllers
 {
@@ -24,7 +25,8 @@ namespace SummonersRiftShop.Shop.Controllers
             return Content($"{itemName}");
         }
 
-        public async Task<IActionResult> Index(string category = "All items", int page = 1,
+        public async Task<IActionResult> Index(string category = "All items", string name = "",
+            int page = 1,
             SortState sortOrder = SortState.IdAsc)
         {
             ViewBag.Categories = db.Categories.ToList();
@@ -37,6 +39,10 @@ namespace SummonersRiftShop.Shop.Controllers
             if (category != "All items")
             {
                 items = items.Where(i => i.Quality == category);
+            }
+            if (!String.IsNullOrEmpty(name))
+            {
+                items = items.Where(i => i.Name.Contains(name));
             }
 
             // сортировка
@@ -71,7 +77,7 @@ namespace SummonersRiftShop.Shop.Controllers
             {
                 PageViewModel = new PageViewModel(count, page, pageSize),
                 SortViewModel = new SortViewModel(sortOrder),
-                FilterViewModel = new FilterViewModel(category),
+                FilterViewModel = new FilterViewModel(category, name),
                 Items = itemsPortion
             };
 

@@ -85,3 +85,7 @@ table.effects, tr.effects, td.effects {
 table.effects:last-child, tr.effects:last-child, td.effects:last-child {
     border-bottom: none;
 }
+
+shopButton {
+    background-color: #785a28;
+}
